@@ -1,0 +1,16 @@
+{
+  "name": "borozdov-beaker",
+  "private": true,
+  "description": "Black ink ruled onto white paper: a square frame, a margin bar and a pill as the only rounded shape.",
+  "license": "MIT",
+  "scripts": {
+    "lint": "stylelint theme.css",
+    "build": "node scripts/build.mjs",
+    "screenshots": "python3 scripts/screenshots.py"
+  },
+  "devDependencies": {
+    "lucide-static": "^1.47.0",
+    "stylelint": "^17.0.0",
+    "stylelint-config-obsidianmd": "^0.1.0"
+  }
+}

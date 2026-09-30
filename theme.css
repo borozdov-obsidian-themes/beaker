@@ -1,0 +1,560 @@
+/*
+  Borozdov Beaker — an Obsidian theme from the Borozdov collection.
+  Two faces: Labcoat (light, black ink ruled onto white paper, checked at
+  noon under a flat fluorescent light) and Nightshift (dark, the same
+  ledger turned out under the bench lamp after hours). No colour in the
+  chrome at all: pill controls are the only rounded shape in the whole
+  interface, every structural line — a table's frame, a callout's
+  margin bar, a code block's rule — stays sharp and drawn in full ink,
+  and a single inversion carries every accent.
+  https://github.com/borozdov-obsidian-themes/beaker
+
+  License: MIT (this file). No embedded fonts.
+*/
+
+/* ===== 1. PALETTE =====
+   Only these values differ by face. Paper for the canvas, ink for
+   running text, graphite for secondary text, pencil for tertiary. Every
+   structural rule — table frame, callout bar, code margin — is drawn in
+   full ink, the way a pen marks a page; hover and selection are washed
+   in a translucent veil instead. The one accent is inversion itself —
+   true ink on Paper, true white on Nightshift's near-black — reserved
+   for the filled button, the checked box and the caret. No hue in the
+   chrome at all. */
+
+.theme-light {
+  color-scheme: light;
+
+  --paper: #fff;
+  --ash: #f1f1f1;
+  --panel: #fff;
+  --hairline: #0000001f;
+  --edge: #e5e7eb;
+  --veil: #0000000a;
+  --veil-strong: #00000014;
+  --mark: #00000026;
+  --scrim: #00000080;
+  --pencil: #8f8f8f;
+  --graphite: #666;
+  --ink: #000;
+  --press: #000;
+  --on-press: #fff;
+  --accent-h: 0;
+  --accent-s: 0%;
+  --accent-l: 0%;
+  --color-red: #b23b2e;
+  --color-orange: #a85a1c;
+  --color-yellow: #8f6d00;
+  --color-green: #386b42;
+  --color-cyan: #29707a;
+  --color-blue: #2f5f9e;
+  --color-purple: #6a4fb0;
+  --color-pink: #a53f6e;
+  --color-red-rgb: 178, 59, 46;
+  --color-orange-rgb: 168, 90, 28;
+  --color-yellow-rgb: 143, 109, 0;
+  --color-green-rgb: 56, 107, 66;
+  --color-cyan-rgb: 41, 112, 122;
+  --color-blue-rgb: 47, 95, 158;
+  --color-purple-rgb: 106, 79, 176;
+  --color-pink-rgb: 165, 63, 110;
+  --code-comment: var(--pencil);
+  --code-function: var(--ink);
+  --code-keyword: var(--ink);
+  --code-operator: var(--graphite);
+  --code-property: var(--ink);
+  --code-punctuation: var(--pencil);
+  --code-string: var(--graphite);
+  --code-tag: var(--ink);
+  --code-value: var(--ink);
+  --code-important: var(--ink);
+}
+
+.theme-dark {
+  color-scheme: dark;
+
+  --paper: #0a0a0a;
+  --ash: #1a1a1a;
+  --panel: #101010;
+  --hairline: #ffffff1f;
+  --edge: #3a3a3a;
+  --veil: #ffffff0a;
+  --veil-strong: #ffffff14;
+  --mark: #fff3;
+  --scrim: #000000a6;
+  --pencil: #737373;
+  --graphite: #a3a3a3;
+  --ink: #f2f2f2;
+  --press: #fff;
+  --on-press: #0a0a0a;
+  --accent-h: 0;
+  --accent-s: 0%;
+  --accent-l: 95%;
+  --color-red: #ff9585;
+  --color-orange: #ffb877;
+  --color-yellow: #e6c96f;
+  --color-green: #8ad19f;
+  --color-cyan: #7ad0dc;
+  --color-blue: #9cc3fb;
+  --color-purple: #c2b0ff;
+  --color-pink: #f0a3c4;
+  --color-red-rgb: 255, 149, 133;
+  --color-orange-rgb: 255, 184, 119;
+  --color-yellow-rgb: 230, 201, 111;
+  --color-green-rgb: 138, 209, 159;
+  --color-cyan-rgb: 122, 208, 220;
+  --color-blue-rgb: 156, 195, 251;
+  --color-purple-rgb: 194, 176, 255;
+  --color-pink-rgb: 240, 163, 196;
+  --code-comment: var(--pencil);
+  --code-function: var(--ink);
+  --code-keyword: var(--ink);
+  --code-operator: var(--graphite);
+  --code-property: var(--ink);
+  --code-punctuation: var(--pencil);
+  --code-string: var(--graphite);
+  --code-tag: var(--ink);
+  --code-value: var(--ink);
+  --code-important: var(--ink);
+}
+
+/* ===== 2. TYPE & SHAPE =====
+   The platform's own sans everywhere. Pill radius (9999px) is the one
+   rounded shape in the theme, reserved for buttons, inputs and tags;
+   cards, popovers and embeds take a small 6px; tables, callouts and
+   code stay perfectly square, ruled like paper. Tracking follows the
+   source card's own scale: it compresses at the largest size and
+   loosens slightly one step down, rather than tightening uniformly. */
+
+body {
+  --font-interface-theme: system-ui, -apple-system, "BlinkMacSystemFont",
+    "Segoe UI", "Roboto", "Helvetica Neue", "Arial", sans-serif;
+  --font-text-theme: system-ui, -apple-system, "BlinkMacSystemFont",
+    "Segoe UI", "Roboto", "Helvetica Neue", "Arial", sans-serif;
+  --font-monospace-theme: "SFMono-Regular", "SF Mono", "JetBrains Mono",
+    ui-monospace, "Menlo", "Consolas", monospace;
+  --line-height-normal: 1.5;
+  --bold-weight: 600;
+  --radius-s: 3px;
+  --radius-m: 6px;
+  --radius-l: 6px;
+  --radius-xl: 12px;
+  --input-radius: 9999px;
+  --button-radius: 9999px;
+  --checkbox-radius: 4px;
+  --checkbox-marker-color: var(--on-press);
+  --input-shadow: none;
+  --input-shadow-hover: none;
+  --h1-size: 1.9em; --h2-size: 1.5em; --h3-size: 1.22em;
+  --h4-size: 1.05em; --h5-size: 1em; --h6-size: 0.85em;
+  --h1-weight: 600; --h2-weight: 600; --h3-weight: 600;
+  --h4-weight: 600; --h5-weight: 500; --h6-weight: 500;
+  --inline-title-size: 2.4em;
+  --inline-title-weight: 600;
+  --h1-line-height: 1.16; --h2-line-height: 1.21; --h3-line-height: 1.26;
+  --h4-line-height: 1.32; --h5-line-height: 1.4; --h6-line-height: 1.4;
+  --h1-color: var(--ink); --h2-color: var(--ink); --h3-color: var(--ink);
+  --h4-color: var(--ink); --h5-color: var(--graphite); --h6-color: var(--pencil);
+}
+
+/* Display size compresses, the way a hero headline does. */
+.inline-title,
+.markdown-rendered h1, .markdown-source-view.mod-cm6 .cm-header-1 {
+  letter-spacing: -0.03em;
+}
+
+/* One step down, tracking opens up slightly instead of tightening
+   further — an authentic quirk of the source card's own type scale. */
+.markdown-rendered h2, .markdown-source-view.mod-cm6 .cm-header-2 {
+  letter-spacing: 0.011em;
+}
+
+.markdown-rendered h3, .markdown-rendered h4,
+.markdown-source-view.mod-cm6 .cm-header-3, .markdown-source-view.mod-cm6 .cm-header-4 {
+  letter-spacing: -0.01em;
+}
+
+/* ===== 3. BASE VARIABLE MAPPING =====
+   Set on .theme-dark / .theme-light, where Obsidian declares them too;
+   the theme loads later and wins the tie. */
+
+.theme-dark,
+.theme-light {
+  --background-primary: var(--paper);
+  --background-primary-alt: var(--ash);
+  --background-secondary: var(--ash);
+  --background-secondary-alt: var(--paper);
+  --background-modifier-hover: var(--veil);
+  --background-modifier-active-hover: var(--veil-strong);
+  --background-modifier-border: var(--hairline);
+  --background-modifier-border-hover: var(--edge);
+  --background-modifier-border-focus: var(--edge);
+  --background-modifier-form-field: var(--ash);
+  --text-normal: var(--ink);
+  --text-muted: var(--graphite);
+  --text-faint: var(--pencil);
+  --text-accent: var(--ink);
+  --text-accent-hover: var(--ink);
+  --text-on-accent: var(--on-press);
+  --text-on-accent-inverted: var(--on-press);
+  --text-selection: var(--veil-strong);
+  --text-highlight-bg: var(--mark);
+  --color-accent: var(--press);
+  --color-accent-1: var(--press);
+  --color-accent-2: var(--press);
+  --interactive-accent: var(--press);
+  --interactive-accent-hover: var(--press);
+  --interactive-normal: var(--ash);
+  --interactive-hover: var(--veil);
+  --divider-color: var(--hairline);
+  --caret-color: var(--ink);
+  --tab-container-background: var(--ash);
+  --titlebar-background: var(--ash);
+  --titlebar-background-focused: var(--ash);
+  --ribbon-background: var(--ash);
+  --ribbon-background-collapsed: var(--paper);
+  --status-bar-background: var(--ash);
+  --nav-item-background-hover: var(--veil);
+  --nav-item-background-active: var(--veil-strong);
+  --nav-item-color-active: var(--ink);
+  --nav-item-background-selected: var(--veil);
+  --nav-item-color-selected: var(--ink);
+  --nav-indentation-guide-color: var(--hairline);
+  --callout-default: var(--ink);
+  --callout-info: var(--ink);
+  --callout-todo: var(--ink);
+  --callout-summary: var(--ink);
+  --callout-tip: var(--ink);
+  --callout-important: var(--ink);
+  --callout-success: var(--ink);
+  --callout-question: var(--ink);
+  --callout-warning: var(--ink);
+  --callout-fail: var(--ink);
+  --callout-error: var(--ink);
+  --callout-bug: var(--ink);
+  --callout-example: var(--ink);
+  --callout-quote: var(--ink);
+}
+
+/* Nightshift keeps the mark opaque so a translucent wash never turns
+   olive against the near-black page. */
+.markdown-rendered mark,
+.markdown-rendered mark .internal-link,
+.cm-s-obsidian span.cm-formatting-highlight,
+.cm-s-obsidian span.cm-highlight:not(.obsidian-search-match-highlight) {
+  color: var(--ink);
+}
+
+/* ===== 4. LINKS =====
+   Ink, not a hue: a link reads as a link because of the rule beneath
+   it, the way the arrow icon does for an external one. */
+
+body {
+  --link-color: var(--ink);
+  --link-color-hover: var(--ink);
+  --link-external-color: var(--ink);
+  --link-external-color-hover: var(--ink);
+  --link-decoration: none;
+  --link-decoration-hover: none;
+  --link-external-decoration: none;
+  --link-external-decoration-hover: none;
+  --link-unresolved-color: var(--pencil);
+  --link-unresolved-opacity: 1;
+  --link-unresolved-decoration-style: dotted;
+}
+
+.markdown-rendered a.internal-link,
+.markdown-rendered a.external-link,
+.markdown-source-view.mod-cm6 .cm-hmd-internal-link,
+.markdown-source-view.mod-cm6 .cm-link,
+.markdown-source-view.mod-cm6 .cm-url {
+  border-bottom: 1px solid var(--ink);
+}
+
+@media (hover: hover) {
+  .markdown-rendered a.internal-link:hover,
+  .markdown-rendered a.external-link:hover {
+    background-color: var(--veil);
+  }
+}
+
+/* ===== 5. CALLOUTS =====
+   A margin note, not a card: an ash fill and a 3px ink bar down the
+   start edge, square corners, no rim on the other three sides. */
+
+body {
+  --callout-border-width: 0;
+  --callout-radius: 0;
+  --callout-padding: 0.7rem 1rem 0.7rem 1.1rem;
+  --callout-title-weight: 600;
+  --callout-content-padding: 0.4rem 0 0;
+  --callout-blend-mode: normal;
+}
+
+.callout {
+  background-color: var(--ash);
+  border-inline-start: 3px solid var(--ink);
+}
+
+.callout-content > :first-child { margin-top: 0; }
+.callout-content > :last-child { margin-bottom: 0; }
+
+/* ===== 6. CODE =====
+   Inline code takes a faint ash chip; a fenced block takes the same
+   margin-bar treatment as a callout, square and ruled rather than a
+   boxed console pane. */
+
+body {
+  --code-background: var(--ash);
+  --code-normal: var(--ink);
+  --code-radius: 3px;
+  --code-border-width: 0;
+  --code-border-color: transparent;
+}
+
+.markdown-rendered pre {
+  border-radius: 0;
+  border-inline-start: 3px solid var(--ink);
+}
+
+/* ===== 7. BLOCKQUOTE ===== */
+
+body {
+  --blockquote-border-thickness: 3px;
+  --blockquote-border-color: var(--ink);
+  --blockquote-color: var(--graphite);
+  --blockquote-font-style: normal;
+}
+
+/* ===== 8. TAGS =====
+   An outlined pill, transparent until the pointer lands on it, then it
+   inverts fully — the smallest instance of the theme's one accent. */
+
+body {
+  --tag-size: 0.78em;
+  --tag-weight: 500;
+  --tag-radius: 9999px;
+  --tag-padding-x: 0.75em;
+  --tag-padding-y: 0.22em;
+  --tag-border-width: 1px;
+  --tag-border-color: var(--hairline);
+  --tag-border-color-hover: var(--press);
+  --tag-color: var(--graphite);
+  --tag-color-hover: var(--on-press);
+  --tag-background: transparent;
+  --tag-background-hover: var(--press);
+  --tag-decoration-hover: none;
+}
+
+/* ===== 9. TABLES =====
+   A ruled data sheet: a square ink frame around the whole table, a
+   double-weight rule under the header, small-caps header labels — the
+   masthead line of a printed results table, not a rounded UI card. */
+
+body {
+  --table-border-width: 1px;
+  --table-column-first-border-width: 0;
+  --table-column-last-border-width: 0;
+  --table-header-border-width: 0;
+  --table-row-last-border-width: 0;
+  --table-border-color: var(--hairline);
+  --table-header-background: transparent;
+  --table-header-background-hover: var(--veil);
+  --table-header-border-color: var(--ink);
+  --table-header-size: 0.72em;
+  --table-header-weight: 600;
+  --table-header-color: var(--graphite);
+  --table-row-background-hover: var(--veil);
+  --table-row-alt-background: transparent;
+  --table-row-alt-background-hover: var(--veil);
+}
+
+.markdown-rendered table {
+  background-color: var(--paper);
+  border: var(--table-border-width) solid var(--ink);
+  border-radius: 0;
+  border-collapse: separate;
+  border-spacing: 0;
+}
+
+/* The frame belongs to the table; cells draw only the inner grid, an
+   end and a bottom line, none on the outer edges. */
+.markdown-rendered th,
+.markdown-rendered td {
+  border-block-start-width: 0;
+  border-inline-start-width: 0;
+}
+
+.markdown-rendered tr > :last-child {
+  border-inline-end-width: 0;
+}
+
+.markdown-rendered table > :last-child > tr:last-child > * {
+  border-block-end-width: 0;
+}
+
+/* Small-caps header labels, closed off by one rule at double weight —
+   drawn on the row rather than the cell, so it never doubles up with
+   the cell's own border above. */
+.markdown-rendered th {
+  text-transform: uppercase;
+  letter-spacing: 0.04em;
+  border-block-end-width: 0;
+}
+
+.markdown-rendered thead tr {
+  border-block-end: 2px solid var(--ink);
+}
+
+/* ===== 10. BUTTONS =====
+   Every button is a pill: outlined by default, and the one that
+   matters inverts fully — the same shape, filled. */
+
+button:not(.clickable-icon, .copy-code-button) {
+  background-color: var(--paper);
+  border: 1px solid var(--hairline);
+  border-radius: 9999px;
+  box-shadow: none;
+  color: var(--ink);
+  font-weight: 500;
+  padding: 0 1.1em;
+}
+
+@media (hover: hover) {
+  button:not(.clickable-icon, .copy-code-button):hover {
+    background-color: var(--veil);
+    border-color: var(--edge);
+  }
+}
+
+button.mod-cta:not(.clickable-icon, .copy-code-button) {
+  background-color: var(--press);
+  border-color: var(--press);
+  border-radius: 9999px;
+  color: var(--on-press);
+  padding: 0 1.3em;
+}
+
+@media (hover: hover) {
+  button.mod-cta:not(.clickable-icon, .copy-code-button):hover {
+    background-color: var(--press);
+    border-color: var(--press);
+    opacity: 0.85;
+  }
+}
+
+/* ===== 11. FIELDS & PROPERTIES ===== */
+
+select.dropdown, input[type="text"], input[type="search"], input[type="number"] {
+  /* background-color, not the `background` shorthand: the shorthand resets
+     the dropdown's own arrow image. */
+  background-color: var(--background-modifier-form-field);
+  border: 1px solid var(--hairline);
+  border-radius: 9999px;
+}
+
+/* A multi-line field keeps the small card radius: a pill reads oddly
+   once it grows taller than one line. */
+textarea {
+  background-color: var(--background-modifier-form-field);
+  border: 1px solid var(--hairline);
+  border-radius: 6px;
+}
+
+/* No focus ring while typing: the caret and the selection already show
+   where you are. Covers form fields and every contenteditable surface. */
+select.dropdown:focus, input:focus, textarea:focus,
+select.dropdown:focus-visible, input:focus-visible, textarea:focus-visible,
+[contenteditable]:focus-visible {
+  outline: none;
+  box-shadow: none;
+}
+
+/* A property's key is a label, not a field. input.* matches the frame rule
+   above at (0,1,1), so the element prefix is needed to win it. */
+input.metadata-property-key-input {
+  background-color: transparent;
+  border: none;
+  border-radius: 0;
+  color: var(--graphite);
+}
+
+body {
+  --pill-background: transparent;
+  --pill-background-hover: var(--press);
+  --pill-border-color: var(--hairline);
+  --pill-border-color-hover: var(--press);
+  --pill-color: var(--graphite);
+  --pill-color-hover: var(--on-press);
+}
+
+/* Labcoat reads a white toggle thumb against a pale track as nearly
+   invisible; Nightshift's default white thumb already has the contrast
+   it needs against the near-black track. */
+.theme-light {
+  --toggle-thumb-color: var(--ink);
+}
+
+.theme-dark {
+  --toggle-thumb-color: var(--press);
+}
+
+/* ===== 12. SURFACES =====
+   No shadows: panels are a hairline rim on the elevated surface, at
+   the same small 6px radius as an embed. */
+
+.modal-bg {
+  background-color: var(--scrim);
+}
+
+.modal, .menu, div.popover, .suggestion-container, .prompt {
+  background-color: var(--panel);
+  border: 1px solid var(--hairline);
+  border-radius: 6px;
+  box-shadow: none;
+}
+
+/* Obsidian pads an embed only on the left, for an accent bar this theme
+   doesn't draw. Even padding all round, with room for the open-link icon. */
+body {
+  --embed-padding: var(--size-4-3) var(--size-4-8) var(--size-4-3) var(--size-4-4);
+  --embed-border-start: none;
+}
+
+.markdown-embed {
+  background-color: var(--ash);
+  border: 1px solid var(--hairline);
+  border-radius: 6px;
+}
+
+/* A hover preview is already a panel: the embed inside it stays flat. */
+.popover.hover-popover > .markdown-embed {
+  background-color: transparent;
+  border: 0;
+  border-radius: 0;
+  box-shadow: none;
+}
+
+hr, .cm-hr { border-color: var(--ink); }
+
+/* ===== 13. MOBILE =====
+   The phone layout re-declares tag and field colors on .is-mobile.theme-*,
+   outranking the rules above; the same selectors bring them back. */
+
+.is-mobile.theme-dark,
+.is-mobile.theme-light {
+  --tag-background: transparent;
+  --background-modifier-form-field: var(--ash);
+  --background-modifier-hover: var(--veil);
+}
+
+/* ===== 14. REDUCED MOTION ===== */
+
+@media (prefers-reduced-motion: reduce) {
+  body {
+    --anim-duration-superfast: 0s;
+    --anim-duration-fast: 0s;
+    --anim-duration-moderate: 0s;
+    --anim-duration-slow: 0s;
+  }
+}
